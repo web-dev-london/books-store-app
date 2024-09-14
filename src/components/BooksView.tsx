@@ -1,25 +1,36 @@
-import useBooks from "../hooks/useBooks"
+import { Stack } from "@chakra-ui/react";
+import useBooks from "../hooks/useBooks";
+import BookCard from "./BookCard";
 
 
 const BooksView = () => {
-    const { books, error } = useBooks()
-    void error
-    console.log('Books', books);
+    const { books, error } = useBooks();
+
+
+    const listOfBooks = books.map((book, index) => {
+        return (
+            <BookCard key={index} book={book} />
+        )
+    })
 
     return (
-        <div>
+        <>
             {error && <p>{error}</p>}
-            {books.map((book) => {
-                return (
-                    <div key={book._id}>
-                        <h1>{book.title}</h1>
-                        <p>{book.author}</p>
-                        <p>{book.genre}</p>
-                        <p>{book.summary}</p>
-                    </div>
-                )
-            })}
-        </div>
+            <Stack
+                display={'grid'}
+                gap={'10px'}
+                gridAutoFlow={'column'}
+                gridAutoColumns={'minmax(230px, 1fr)'}
+                overflowX={'scroll'}
+                overscrollBehaviorX={'contain'}
+                px={'5px'}
+                pt={'10px'}
+                pb={'25px'}
+                maxW={'calc(100vw - 40px)'}
+            >
+                {listOfBooks}
+            </Stack>
+        </>
     )
 }
 

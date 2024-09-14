@@ -61,7 +61,7 @@ const HeroInputBottom = ({ currentPlaceholder, placeholderTexts, isFocused, setI
                     onBlur={() => setIsFocused(false)}
                     bg={'white'}
                     _focusVisible={{ boxShadow: 'none' }}
-                    transition={'_placeholder 0.5s ease-in-out'}
+                    transition={'_placeholder .4s ease-in-out'}
                 />
             </InputGroup>
         </>

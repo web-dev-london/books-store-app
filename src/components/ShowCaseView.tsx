@@ -1,6 +1,9 @@
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
 import Clink from 'clink-react'
+// import Playaround from './Playaround'
+import BooksView from './BooksView'
+
 
 const ShowCaseView = () => {
     return (
@@ -46,6 +49,7 @@ const ShowCaseView = () => {
                         </Text>
                     </Clink>
                 </Box>
+                <BooksView />
             </Container >
         </>
     )
