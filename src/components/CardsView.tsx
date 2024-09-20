@@ -1,20 +1,21 @@
-import { Card, CardBody, Flex, Image, Text } from "@chakra-ui/react"
-import { FetchBooksResponse } from "../hooks/useBooks"
+import { CardBody, Flex, Text, Image } from "@chakra-ui/react"
+import CardView from "../utils/CardView"
+import { Book } from "../validation/validate"
+import noImage from '../assets/no-image-placeholder.webp'
 import { StarIcon } from "@chakra-ui/icons"
 import { FaStarHalfAlt } from "react-icons/fa";
 
+
 interface Props {
-    book: FetchBooksResponse
+    book: Book
 }
 
-const BookCard = ({ book }: Props) => {
-
-    const starIconRating = (rating: string) => {
-        const ratingNumber = Number(rating)
+const CardsView = ({ book }: Props) => {
+    const starIconRating = (rating: number) => {
         const totalStars = 5
 
-        const filledStars = Math.floor(ratingNumber)
-        const halfStar = ratingNumber % 1 >= 0.5
+        const filledStars = Math.floor(rating)
+        const halfStar = rating % 1 >= 0.5
         const emptyStars = totalStars - filledStars - (halfStar ? 1 : 0)
 
         return (
@@ -39,25 +40,14 @@ const BookCard = ({ book }: Props) => {
         )
     }
 
-
+    const srcImage = book.volumeInfo?.imageLinks?.thumbnail || noImage
     return (
         <>
-            <Card
-                display={'grid'}
-                gridTemplateRows={'min-content'}
-                p={'25px'}
-                gap={'10px'}
-                borderRadius={'10px'}
-                border={'none'}
-                outline={'none'}
-                boxShadow={'none'}
-                _hover={{ bg: 'rgb(249, 249, 249)', transform: 'scale(1.03)' }}
-                transition='all .2s ease '
-            >
+            <CardView>
                 <Image
                     inlineSize={'100%'}
-                    src={book.image}
-                    alt={book.title}
+                    src={srcImage}
+                    alt={book.volumeInfo.title}
                     borderRadius={'5px'}
                 />
                 <CardBody
@@ -71,17 +61,41 @@ const BookCard = ({ book }: Props) => {
                         fontWeight={'600'}
                         lineHeight={'21px'}
                     >
-                        {book.title}
+                        {book.volumeInfo.title}
                     </Text>
                     <Text
                         fontSize={'13px'}
                         fontWeight={'400'}
                         lineHeight={'18px'}
-                        color={'rgba(0, 0, 0, 0.6)'}
+                    >
+                        Language: {book.volumeInfo.language.toLowerCase()}
+                    </Text>
+                    {book.volumeInfo.publishedDate &&
+                        (<Text
+                            fontSize={'13px'}
+                            fontWeight={'400'}
+                            lineHeight={'18px'}
+                        // color={'rgba(0, 0, 0, 0.6)'}
+                        >
+                            Published:   {book.volumeInfo.publishedDate}
+                        </Text>)}
+                    <Text
+                        fontSize={'13px'}
+                        fontWeight={'400'}
+                        lineHeight={'18px'}
+                    >
+                        By: {book.volumeInfo.publisher}
+                    </Text>
+                    <Text
+                        fontSize={'15px'}
+                        fontWeight={'400'}
+                        lineHeight={'18px'}
                         mt={'5px'}
                     >
-                        {book.author}
+                        {book.volumeInfo.authors}
                     </Text>
+
+
                     <Flex
                         alignItems={'center'}
                         gap={'5px'}
@@ -92,15 +106,14 @@ const BookCard = ({ book }: Props) => {
                             fontSize={'16px'}
                             mr={'5px'}
                         >
-                            {book.rating}
+                            {book.volumeInfo.averageRating}
                         </Text>
-                        {/* <StarIcon color={'#FFB800'} /> */}
-                        {starIconRating(book.rating)}
+                        {book.volumeInfo.averageRating && starIconRating(book.volumeInfo.averageRating)}
                     </Flex>
                 </CardBody>
-            </Card>
+            </CardView>
         </>
     )
 }
 
-export default BookCard
+export default CardsView

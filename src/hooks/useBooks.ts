@@ -1,44 +1,81 @@
-import { useEffect, useState } from "react"
-import apiClient from "../services/api-client"
-import { CanceledError } from "axios"
-
-export interface Review {
-    _id: string
-    reviewer: string
-    rating: number
-    comment: string
-}
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { Book, bookSchema, FetchResponse } from "../validation/validate";
+import ApiClient from "../services/api-client";
+import useBookQueryStore from "../store";
+import ms from 'ms'
 
 
-
-export interface FetchBooksResponse {
-    id: string;
-    title: string;
-    author: string;
-    image: string;
-    rating: string;
-}
+const apiClient = new ApiClient(`/books/v1/volumes`, bookSchema);
 
 const useBooks = () => {
-    const [books, setBooks] = useState<FetchBooksResponse[]>([]);
-    const [error, setError] = useState('');
+    const { bookQuery } = useBookQueryStore();
+
+    // const startIndex = (page - 1) * limit;
+    const startIndex = (bookQuery.page - 1) * bookQuery.limit;
 
 
-    useEffect(() => {
-        const controller = new AbortController()
-        const { signal } = controller
-        apiClient.get<FetchBooksResponse[]>('search.php?query=atomic', { signal })
-            .then((res) => setBooks(res.data))
-            .catch((err) => {
-                if (err instanceof CanceledError) return
-                setError(err.message)
+    console.log('API Request Params: ', {
+        q: bookQuery.searchText,
+        filter: bookQuery.filter,
+        startIndex,
+        maxResults: bookQuery.limit,
+        orderBy: bookQuery.orderBy
+    });
+    return useQuery<FetchResponse<Book>>({
+        queryKey: ['books', bookQuery],
+        queryFn: () => {
+            return apiClient.getAll({
+                params: {
+                    q: bookQuery.searchText,
+                    filter: bookQuery.filter,
+                    startIndex,
+                    maxResults: bookQuery.limit,
+                    orderBy: bookQuery.orderBy,
+                }
             })
-
-        return () => controller.abort()
-    }, [])
-
-
-    return { books, error }
+        },
+        staleTime: ms('24h'),// 24 hours
+        placeholderData: keepPreviousData,
+    })
 }
 
+/* 
+    partial
+    full
+    free-ebooks
+    paid-ebooks
+    ebooks
+ */
+
 export default useBooks;
+
+
+
+
+
+
+/*
+https://www.googleapis.com/books/v1/volumes?q=atomic-habits
+ */
+
+
+
+
+
+// import { useQuery } from "@tanstack/react-query";
+// import ApiClient from "../services/api-client";
+// import { bookSchema } from "../validation/validate";
+// import ms from 'ms';
+
+
+// const apiClient = new ApiClient(`?q=atomic-habits`, bookSchema);
+
+
+// const useBooks = () => useQuery({
+//     queryKey: ['books'],
+//     queryFn: apiClient.getAll,
+//     staleTime: ms('24h'),// 24 hours
+// })
+
+
+// export default useBooks;

@@ -1,69 +1,70 @@
 import { SearchIcon } from '@chakra-ui/icons'
-import { InputGroup, InputLeftElement, Input, keyframes } from '@chakra-ui/react'
-
-const spin = keyframes`
-    0% {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-
-    10% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-        90% {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-100%);
-            opacity: 0;
-        }`
-
-interface Props {
-    currentPlaceholder: number
-    placeholderTexts: string[]
-    isFocused: boolean
-    setIsFocused: React.Dispatch<React.SetStateAction<boolean>>
-}
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
+import React, { useState } from 'react'
+// import { useNavigate } from 'react-router-dom';
+import useBookQueryStore from '../store';
 
 
-const HeroInputBottom = ({ currentPlaceholder, placeholderTexts, isFocused, setIsFocused }: Props) => {
-    const slideAnimation = `${spin} 2s ease infinite`
+const HeroInputBottom = () => {
+    const [placeholder, setPlaceholder] = useState('Search for Books');
+    const ref = React.useRef<HTMLInputElement>(null);
+    const { setSearchText } = useBookQueryStore();
+    // const navigate = useNavigate();
+
+
+
     return (
         <>
-            <InputGroup
-                position={'relative'}
-                maxWidth={'414px'}
-                top={'32px'}
-                left={'50%'}
-                transform={'translateX(-50%)'}
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+
+                    if (ref.current) {
+                        setSearchText(ref.current.value);
+                    }
+                }}
             >
-                <InputLeftElement
-                    pointerEvents='none'
-                    position={'absolute'}
-                    left={'2%'}
-                    top={'50%'}
-                    transform={'translate(-2%, -50%)'}
+                <InputGroup
+                    position={'relative'}
+                    maxWidth={'414px'}
+                    top={'32px'}
+                    left={'50%'}
+                    transform={'translateX(-50%)'}
                 >
-                    <SearchIcon color='black' fontSize={'20px'} />
-                </InputLeftElement>
-                <Input
-                    as={'input'}
-                    size={'lg'}
-                    border={'1px solid rgba(0, 0, 0, 0.1)'}
-                    borderRadius={'200px'}
-                    boxShadow={'0 4px 20px -2px rgba(0, 0, 0, 0.2)'}
-                    type='text'
-                    placeholder={`${!isFocused ? placeholderTexts[currentPlaceholder] : ''}`}
-                    _placeholder={{ animation: slideAnimation, fontSize: '22px', lineHeight: '26px' }}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
-                    bg={'white'}
-                    _focusVisible={{ boxShadow: 'none' }}
-                    transition={'_placeholder .4s ease-in-out'}
-                />
-            </InputGroup>
+                    <InputLeftElement
+                        pointerEvents='none'
+                        position={'absolute'}
+                        left={'2%'}
+                        top={'50%'}
+                        transform={'translate(-2%, -50%)'}
+                    >
+                        <SearchIcon
+                            opacity={'0.2'}
+                            color='black'
+                            fontSize={'18px'}
+                        />
+                    </InputLeftElement>
+                    <Input
+                        ref={ref}
+                        as={'input'}
+                        size={'lg'}
+                        border={'1px solid rgba(0, 0, 0, 0.1)'}
+                        borderRadius={'200px'}
+                        boxShadow={'0 4px 20px -2px rgba(0, 0, 0, 0.2)'}
+                        type='text'
+                        placeholder={placeholder}
+                        _placeholder={{
+                            color: 'black',
+                            fontSize: '15px',
+                            opacity: '0.4',
+                        }}
+                        onFocus={() => setPlaceholder('')}
+                        onBlur={() => setPlaceholder('Search for Books')}
+                        _focusVisible={{ boxShadow: 'none' }}
+                        transition={'.4s ease'}
+                    />
+                </InputGroup>
+            </form>
         </>
     )
 }

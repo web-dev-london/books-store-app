@@ -1,24 +1,31 @@
 import { ChakraProvider } from '@chakra-ui/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
+import { RouterProvider } from 'react-router-dom'
 import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import ErrorPage from './pages/ErrorPage.tsx'
+import router from './routes/routes.tsx'
+import customTheme from './theme.ts'
 
-const router = createBrowserRouter([
-    // Layout
-    {
-        path: '/',
-        element: <App />,
-        errorElement: <ErrorPage />,
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            networkMode: "offlineFirst",
+        },
+        mutations: {
+            networkMode: "offlineFirst",
+        },
     }
-])
+});
+
+
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <ChakraProvider>
-            <RouterProvider router={router} />
+        <ChakraProvider theme={customTheme}>
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+            </QueryClientProvider>
         </ChakraProvider>
     </StrictMode>,
 )

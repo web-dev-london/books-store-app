@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.nav-item {
-    font-weight: 500;
-    font-size: 16px;
-    margin-right: 25px;
-    color: black;
-}
-.nav-item:nth-last-of-type(1) {
-    margin-right: 0;
-}
-.btn-group {
-    position: relative;
-}
 .search-icon-toggle.active {
     display: none;
 }
@@ -22,11 +10,6 @@
     width: 250px;
     position: absolute;
     right: 0px;
-}
-
-.close-btn {
-    position: absolute;
-    top: -1px;
 }
 
 .search-bar-input.active {

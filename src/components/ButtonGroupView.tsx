@@ -10,7 +10,7 @@ const ButtonGroupView = ({ isOpen, setIsOpen }: Props) => {
     return (
         <>
             <ButtonGroup
-                className='btn-group'
+                position={'relative'}
                 display={'flex'}
                 alignItems={'center'}
                 variant={'ghost'}
@@ -56,9 +56,12 @@ const ButtonGroupView = ({ isOpen, setIsOpen }: Props) => {
                     borderRadius={'50%'}
                     _hover={{ bg: 'gray.100' }}
                     transition={{ bg: '.4s ease' }}
-                    className='close-btn'
                     icon={
                         <CloseIcon
+                            position={'absolute'}
+                            right={'50%'}
+                            top={'50%'}
+                            transform={'translate(50%, -50%)'}
                             w={3} h={3}
                         />
                     }

@@ -1,39 +1,41 @@
 import { IconButton, Menu, MenuButton, MenuDivider, MenuItem, MenuList } from '@chakra-ui/react';
 import { FiMenu } from "react-icons/fi";
 const MenuView = () => {
+
     return (
         <>
-            <Menu>
+            <Menu
+            >
                 <MenuButton
                     as={IconButton}
                     aria-label='menu'
                     borderRadius={'50%'}
-                    _hover={{ bg: '#f4f4f4' }}
                     transition={{ bg: '.4s ease' }}
                     icon={<FiMenu size={25} />}
                     variant='ghost'
                     ml={3}
-                    _focus={{ bg: '#f4f4f4' }}
                 />
-                <MenuList minW={'150px'}>
-                    <MenuItem _hover={{ bg: '#f4f4f4' }} _focus={{ bg: '#f4f4f4' }}>
+                <MenuList minW={'150px'}
+                >
+                    <MenuItem
+                    >
                         Bookmarks
                     </MenuItem>
-                    <MenuItem _hover={{ bg: '#f4f4f4' }}>
+                    <MenuItem >
                         History
                     </MenuItem>
-                    <MenuItem _hover={{ bg: '#f4f4f4' }}>
+                    <MenuItem >
                         Ratings
                     </MenuItem>
                     <MenuDivider />
-                    <MenuItem _hover={{ bg: '#f4f4f4' }}>
+                    <MenuItem>
                         Support
                     </MenuItem>
-                    <MenuItem _hover={{ bg: '#f4f4f4' }} >
+                    <MenuItem  >
                         Affiliate
                     </MenuItem>
                     <MenuDivider />
-                    <MenuItem _hover={{ bg: '#f4f4f4' }}>
+                    <MenuItem>
                         Sign In
                     </MenuItem>
                 </MenuList>

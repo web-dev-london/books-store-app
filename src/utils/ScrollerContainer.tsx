@@ -1,21 +1,10 @@
-import { Stack } from "@chakra-ui/react";
-import useBooks from "../hooks/useBooks";
-import BookCard from "./BookCard";
+import { Stack } from "@chakra-ui/react"
+import { PropsWithChildren } from "react"
 
 
-const BooksView = () => {
-    const { books, error } = useBooks();
-
-
-    const listOfBooks = books.map((book, index) => {
-        return (
-            <BookCard key={index} book={book} />
-        )
-    })
-
+const ScrollerContainer = ({ children }: PropsWithChildren) => {
     return (
         <>
-            {error && <p>{error}</p>}
             <Stack
                 display={'grid'}
                 gap={'10px'}
@@ -28,10 +17,10 @@ const BooksView = () => {
                 pb={'25px'}
                 maxW={'calc(100vw - 40px)'}
             >
-                {listOfBooks}
+                {children}
             </Stack>
         </>
     )
 }
 
-export default BooksView
+export default ScrollerContainer

@@ -18,6 +18,7 @@ const Logo = ({ isOpen }: { isOpen: boolean }) => {
                         objectFit="cover"
                         w={'30px'}
                         h={'30px'}
+                        borderRadius={'50%'}
                     />
                     <Text
                         display={'inline-block'}
@@ -25,7 +26,7 @@ const Logo = ({ isOpen }: { isOpen: boolean }) => {
                         fontWeight={'600'}
                         fontSize={'24px'}
                     >
-                        SoBrief
+                        OnBrief
                     </Text>
                 </Flex>
             </Clink>

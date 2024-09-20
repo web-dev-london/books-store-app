@@ -1,31 +1,20 @@
-import { Box, Container, Stack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Box, Container, Stack, useColorModeValue } from '@chakra-ui/react';
 import HeroBreadCrumbs from './HeroBreadCrumbs';
 import HeroBreadCrumbsGray from './HeroBreadCrumbsGray';
 import HeroHeading from './HeroHeading';
 import HeroInputBottom from './HeroInputBottom';
+// import { placeholderTexts } from '../helper/placeholder';
 
-const placeholderTexts = ["make money asap", "the alchemist", "master the time management", "zero to one", 'jordan peterson', 'build self-confidence', 'master the art of leadership', 'lean startup', 'the power of now', 'heal emotioanl trauma', 'improve public speeaking', 'get in shape', 'beautify your life', 'atomic habits', 'gain power of influence', 'grow in faith', 'sapiens', 'fix the system'];
+
 
 const HeroView = () => {
-    const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
-    const [isFocused, setIsFocused] = useState(false);
-
-
-
-    useEffect(() => {
-        if (isFocused) return
-
-        const interval = setInterval(() => {
-            setCurrentPlaceholder((prev) => (prev + 1) % placeholderTexts.length);
-        }, 2000);
-        return () => clearInterval(interval);
-    }, [isFocused])
-
+    const bgColor = useColorModeValue('rgb(250, 250, 250)', 'rgb(26, 32, 44)');
+    const textColor = useColorModeValue('rgb(26, 32, 44)', 'rgb(250, 250, 250)');
     return (
         <>
             <Box
-                bg={'rgb(250, 250, 250)'}
+                bg={bgColor}
+                color={textColor}
                 pb={'30px'}
                 position={'relative'}
             >
@@ -46,10 +35,6 @@ const HeroView = () => {
                         <HeroHeading />
                         <HeroBreadCrumbsGray />
                         <HeroInputBottom
-                            currentPlaceholder={currentPlaceholder}
-                            placeholderTexts={placeholderTexts}
-                            isFocused={isFocused}
-                            setIsFocused={setIsFocused}
                         />
 
                     </Stack>
