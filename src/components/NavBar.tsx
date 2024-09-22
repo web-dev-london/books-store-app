@@ -4,9 +4,7 @@ import ButtonTrialView from './ButtonTrialView';
 import Logo from './Logo';
 import MenuView from './MenuView';
 import NavList from './NavList';
-// import ButtonGroupView from './ButtonGroupView';
-
-
+import ButtonGroupView from './ButtonGroupView';
 
 
 
@@ -52,7 +50,7 @@ const NavBar = () => {
                         <NavList />
                         <Flex ml={'auto'}>
                             <ButtonTrialView />
-                            {/* <ButtonGroupView isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+                            <ButtonGroupView isOpen={isOpen} setIsOpen={setIsOpen} />
                             <MenuView />
                         </Flex>
                     </HStack>

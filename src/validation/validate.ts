@@ -1,3 +1,4 @@
+
 import z from "zod";
 import { fromZodError } from "zod-validation-error";
 
@@ -39,6 +40,7 @@ type FetchResponse<T> = z.infer<ReturnType<typeof defineFetchResponse<T>>>
 
 const validateResponse = <T>(responseSchema: z.ZodSchema<FetchResponse<T>>, data: unknown): FetchResponse<T> => {
     const validation = responseSchema.safeParse(data);
+    // console.log('Validation: ', validation);
     if (!validation.success) {
         console.log(fromZodError(validation.error));
         throw new Error(`Invalid data strcucture received from the API: ${fromZodError(validation.error)}`);
@@ -46,7 +48,42 @@ const validateResponse = <T>(responseSchema: z.ZodSchema<FetchResponse<T>>, data
     return validation.data
 }
 
+const bookDetailSchema = z.object({
+    id: z.string(),
+    selfLink: z.string(),
+    volumeInfo: z.object({
+        title: z.string(),
+        subtitle: z.string().optional(),
+        authors: z.array(z.string()).optional(),
+        publisher: z.string().optional(),
+        publishedDate: z.string().optional(),
+        description: z.string().optional(),
+        averageRating: z.number().optional(),
+        pageCount: z.number().optional(),
+        imageLinks: z.object({
+            smallThumbnail: z.string().optional(),
+            thumbnail: z.string().optional(),
+        }).optional(),
+        language: z.string().optional(),
+        previewLink: z.string().optional(),
+        infoLink: z.string().optional(),
+        canonicalVolumeLink: z.string().optional(),
+    }),
+    accessInfo: z.object({
+        country: z.string().optional(),
+        epub: z.object({
+            isAvailable: z.boolean().optional(),
+            acsTokenLink: z.string().optional(),
+        }),
+        pdf: z.object({
+            isAvailable: z.boolean().optional(),
+        }).optional(),
+    }).optional(),
+})
 
-export { bookSchema, booksSchema, defineFetchResponse, validateResponse };
-export type { Book, Books, FetchResponse };
+type BookDetail = z.infer<typeof bookDetailSchema>
+
+
+export { bookDetailSchema, bookSchema, booksSchema, defineFetchResponse, validateResponse };
+export type { Book, BookDetail, Books, FetchResponse };
 

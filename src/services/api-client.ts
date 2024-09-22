@@ -1,32 +1,17 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { defineFetchResponse, FetchResponse } from "../validation/validate";
-import { fromZodError } from "zod-validation-error";
 import z from "zod";
+import {
+    defineFetchResponse,
+    FetchResponse,
+    validateResponse,
+} from "../validation/validate";
 
 const axiosInstance = axios.create({
-    // /books/v1/volumes
     baseURL: 'https://www.googleapis.com',
     params: {
         key: `AIzaSyDSo8ewzkQCnp4MiHC7fsJfGyGDBLcASEU`,
     }
 });
-
-export const apiClient = axios.create({
-    baseURL: 'https://www.googleapis.com',
-    params: {
-        key: `AIzaSyDSo8ewzkQCnp4MiHC7fsJfGyGDBLcASEU`,
-    }
-});
-
-const validateResponse = <T>(responseSchema: z.ZodSchema<FetchResponse<T>>, data: unknown): FetchResponse<T> => {
-    const validation = responseSchema.safeParse(data);
-    // console.log('Validation: ', validation);
-    if (!validation.success) {
-        console.log(fromZodError(validation.error));
-        throw new Error(`Invalid data strcucture received from the API: ${fromZodError(validation.error)}`);
-    }
-    return validation.data
-}
 
 
 class ApiClient<T> {
@@ -44,6 +29,17 @@ class ApiClient<T> {
         const fetchResponseSchema = defineFetchResponse(this.schema);
         // console.log('Fetch Response Schema: ', fetchResponseSchema);
         return validateResponse(fetchResponseSchema, response.data);
+    }
+
+    get = async (id: string): Promise<T> => {
+        const response = await axiosInstance.get<unknown>(`${this.endpoint}/${id}`);
+        // console.log('Book Detail API Response: ', response.data);
+        const validation = this.schema.safeParse(response.data);
+        if (!validation.success) {
+            console.error("Validation error in GET:", validation.error);
+            throw new Error("Invalid data structure received from the API.");
+        }
+        return validation.data;
     }
 }
 

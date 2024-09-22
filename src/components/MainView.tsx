@@ -5,6 +5,7 @@ import FilteredBooks from './FilteredBooks';
 import MainHeader from './MainHeader';
 import Pagination from './Pagination';
 import SortedBooks from './SortedBooks';
+import Clink from 'clink-react';
 
 
 const MainView = () => {
@@ -12,7 +13,9 @@ const MainView = () => {
 
     const listOfBooks = data?.items && data?.items.map((book, index) => {
         return (
-            <CardsView key={index} book={book} />
+            <Clink key={index} to={`/book/${book.id}`}>
+                <CardsView book={book} />
+            </Clink>
         )
     })
 
