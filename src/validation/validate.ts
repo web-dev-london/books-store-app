@@ -4,21 +4,23 @@ import { fromZodError } from "zod-validation-error";
 
 const bookSchema = z.object({
     id: z.string(),
-    etag: z.string(),
-    selfLink: z.string(),
     volumeInfo: z.object({
         title: z.string(),
         subtitle: z.string().optional(),
         authors: z.array(z.string()).optional(),
         publisher: z.string().optional(),
         publishedDate: z.string().optional(),
-        averageRating: z.number().optional(),
-        language: z.string(),
+        description: z.string().optional(),
+        pageCount: z.number().optional(),
         imageLinks: z.object({
-            smallThumbnail: z.string(),
-            thumbnail: z.string(),
-        }).optional().nullable(),
-    })
+            smallThumbnail: z.string().optional(),
+            thumbnail: z.string().optional(),
+        }).optional(),
+        language: z.string().optional(),
+        previewLink: z.string().optional(),
+        infoLink: z.string().optional(),
+        canonicalVolumeLink: z.string().optional(),
+    }),
 })
 
 type Book = z.infer<typeof bookSchema>
@@ -30,7 +32,7 @@ type Books = z.infer<typeof booksSchema>
 const defineFetchResponse = <T>(resultSchema: z.ZodSchema<T>) =>
     z.object({
         totalItems: z.number(),
-        items: z.array(resultSchema)
+        items: z.array(resultSchema).optional(),
     })
 
 type FetchResponse<T> = z.infer<ReturnType<typeof defineFetchResponse<T>>>

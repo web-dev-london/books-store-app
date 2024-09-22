@@ -3,13 +3,15 @@ import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import React, { useState } from 'react'
 // import { useNavigate } from 'react-router-dom';
 import useBookQueryStore from '../store';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
 const HeroInputBottom = () => {
     const [placeholder, setPlaceholder] = useState('Search for Books');
     const ref = React.useRef<HTMLInputElement>(null);
     const { setSearchText } = useBookQueryStore();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
 
 
@@ -20,7 +22,13 @@ const HeroInputBottom = () => {
                     e.preventDefault();
 
                     if (ref.current) {
-                        setSearchText(ref.current.value);
+                        const searchTerm = ref.current.value.trim();
+                        if (searchTerm) {
+                            setSearchText(searchTerm);
+                            const params = new URLSearchParams(searchParams.toString());
+                            params.set('search', searchTerm);
+                            navigate(`?${params.toString()}`);
+                        }
                     }
                 }}
             >

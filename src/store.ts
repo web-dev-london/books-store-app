@@ -4,11 +4,11 @@ import { create } from 'zustand';
 
 interface BookQueryStore {
     bookQuery: {
+        search: string
+        filter: string
+        orderBy: string
         page: number
         limit: number
-        searchText: string
-        filter: string
-        orderBy?: string
     }
     setPage: (page: number) => void
     setLimit: (limit: number) => void
@@ -22,13 +22,13 @@ const useBookQueryStore = create<BookQueryStore>((set) => ({
     bookQuery: {
         page: 1,
         limit: 8,
-        searchText: 'atomic habits',
+        search: 'atomic habits',
         filter: 'full',
-        orderBy: 'relevance'
+        orderBy: 'relevance',
     },
     setPage: (page: number) => set({ bookQuery: { ...useBookQueryStore.getState().bookQuery, page } }),
     setLimit: (limit: number) => set({ bookQuery: { ...useBookQueryStore.getState().bookQuery, limit } }),
-    setSearchText: (searchText: string) => set({ bookQuery: { ...useBookQueryStore.getState().bookQuery, searchText } }),
+    setSearchText: (search: string) => set({ bookQuery: { ...useBookQueryStore.getState().bookQuery, search } }),
     setFilter: (filter: string) => set({ bookQuery: { ...useBookQueryStore.getState().bookQuery, filter } }),
     setOrderBy: (orderBy: string) => set({ bookQuery: { ...useBookQueryStore.getState().bookQuery, orderBy } }),
 }));

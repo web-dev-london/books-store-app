@@ -1,6 +1,6 @@
 import { Flex, Image, Text } from '@chakra-ui/react'
 import Clink from 'clink-react'
-import logo from '../assets/logo.png';
+import logo from '../assets/logo-1-modified.png';
 
 const Logo = ({ isOpen }: { isOpen: boolean }) => {
     return (

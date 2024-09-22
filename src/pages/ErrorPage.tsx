@@ -7,7 +7,9 @@ const ErrorPage = () => {
     return (
         <>
             <NavBar />
-            <Box p={5}>
+            <Box
+                py={20}
+            >
                 <Heading> 🤷‍♂️ Oops...</Heading>
                 <Text>{isRouteErrorResponse(error) ? 'This page does not exist' : 'An unexpected error has occurred'}</Text>
             </Box>

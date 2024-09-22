@@ -20,6 +20,7 @@ export const apiClient = axios.create({
 
 const validateResponse = <T>(responseSchema: z.ZodSchema<FetchResponse<T>>, data: unknown): FetchResponse<T> => {
     const validation = responseSchema.safeParse(data);
+    // console.log('Validation: ', validation);
     if (!validation.success) {
         console.log(fromZodError(validation.error));
         throw new Error(`Invalid data strcucture received from the API: ${fromZodError(validation.error)}`);
