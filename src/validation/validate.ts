@@ -13,6 +13,7 @@ const bookSchema = z.object({
         publishedDate: z.string().optional(),
         description: z.string().optional(),
         pageCount: z.number().optional(),
+        averageRating: z.number().optional(),
         imageLinks: z.object({
             smallThumbnail: z.string().optional(),
             thumbnail: z.string().optional(),

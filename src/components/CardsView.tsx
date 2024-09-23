@@ -68,7 +68,7 @@ const CardsView = ({ book }: Props) => {
                         fontWeight={'400'}
                         lineHeight={'18px'}
                     >
-                        Language: {book.volumeInfo.language.toLowerCase()}
+                        Language: {book.volumeInfo.language}
                     </Text>
                     {book.volumeInfo.publishedDate &&
                         (<Text
