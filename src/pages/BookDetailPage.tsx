@@ -2,14 +2,39 @@ import { useParams } from "react-router-dom"
 import useBook from "../hooks/useBook"
 import { Text, Box, Container, Heading, Image, useColorModeValue, Flex } from "@chakra-ui/react"
 import Clink from "clink-react"
+import { ChevronRightIcon, StarIcon } from "@chakra-ui/icons"
+import { useState } from "react"
 
 const BookDetailPage = () => {
+    const [rating, setRating] = useState<number | null>(null);
+    const [onHover, setOnHover] = useState<number | null>(null);
     const { id } = useParams()
     const { data } = useBook(id!)
     const bgColor = useColorModeValue('rgb(250, 250, 250)', 'rgb(26, 32, 44)');
     const textColor = useColorModeValue('rgba(0, 0, 0, 0.6)', 'rgba(255, 255, 255, 0.6)');
+    const linkColor = useColorModeValue('#4169E1', '#90EE90');
 
-    console.log('BookDetailPage: ', data);
+    const stars = [...Array(5)].map((_, index) => {
+        const currentRate = index + 1;
+        return (
+            <label key={index} >
+                <input
+                    type="radio"
+                    style={{ display: 'none', }}
+                    name="rating"
+                    value={currentRate}
+                    onClick={() => setRating(currentRate)}
+                />
+                <StarIcon
+                    cursor={'pointer'}
+                    onMouseEnter={() => setOnHover(currentRate)}
+                    onMouseLeave={() => setOnHover(null)}
+                    color={currentRate <= (onHover ?? rating ?? currentRate) ? '#FFC107' : '#E0E0E0'}
+                />
+            </label>
+        )
+    })
+
     return (
         <>
             <Box
@@ -21,6 +46,14 @@ const BookDetailPage = () => {
                     paddingX={'15px'}
                     py={20}
                 >
+                    {data?.volumeInfo?.title &&
+                        (<Text
+                            mb={'30px'}
+                            color={textColor}
+                        >
+                            Book  <ChevronRightIcon />
+                            {data?.volumeInfo?.title}
+                        </Text>)}
                     <Box
                         display={'flow-root'}
                     >
@@ -111,19 +144,33 @@ const BookDetailPage = () => {
                                 gap={'10px'}
                             >
                                 <Clink
+                                    _hover={{ textDecoration: 'none' }}
+                                    color={linkColor}
                                     to={data?.volumeInfo?.previewLink ?? '#'}
+                                    mr={'10px'}
                                 >
                                     Preview
                                 </Clink>
                                 <Clink
+                                    _hover={{ textDecoration: 'none' }}
+                                    color={linkColor}
                                     to={data?.volumeInfo?.infoLink ?? '#'}
                                 >
-                                    More Info
+                                    Info
                                 </Clink>
                             </Flex>
-                            <Text>
-                                {data?.volumeInfo?.averageRating}
-                            </Text>
+                            <Flex
+                                alignItems={'center'}
+                                gap={'5px'}
+                                justifyContent={'flex-start'}
+                            >
+
+                                <Text mr={'5px'}>
+                                    {data?.volumeInfo?.averageRating}
+                                </Text>
+
+                                {data?.volumeInfo?.averageRating && stars}
+                            </Flex>
                         </Flex>
                         <Text
                             color={textColor}

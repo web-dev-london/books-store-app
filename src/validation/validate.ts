@@ -61,6 +61,9 @@ const bookDetailSchema = z.object({
         description: z.string().optional(),
         averageRating: z.number().optional(),
         pageCount: z.number().optional(),
+        printType: z.string().optional(),
+        mainCategory: z.string().optional(),
+        categories: z.array(z.string()).optional(),
         imageLinks: z.object({
             smallThumbnail: z.string().optional(),
             thumbnail: z.string().optional(),
