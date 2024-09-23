@@ -23,6 +23,18 @@ const bookSchema = z.object({
         infoLink: z.string().optional(),
         canonicalVolumeLink: z.string().optional(),
     }),
+    accessInfo: z.object({
+        country: z.string().optional(),
+        epub: z.object({
+            isAvailable: z.boolean().optional(),
+            downloadLink: z.string().optional(),
+            acsTokenLink: z.string().optional(),
+        }),
+        pdf: z.object({
+            isAvailable: z.boolean().optional(),
+            downloadLink: z.string().optional(),
+        }).optional(),
+    }).optional(),
 })
 
 type Book = z.infer<typeof bookSchema>
@@ -77,10 +89,12 @@ const bookDetailSchema = z.object({
         country: z.string().optional(),
         epub: z.object({
             isAvailable: z.boolean().optional(),
+            downloadLink: z.string().optional(),
             acsTokenLink: z.string().optional(),
         }),
         pdf: z.object({
             isAvailable: z.boolean().optional(),
+            downloadLink: z.string().optional(),
         }).optional(),
     }).optional(),
 })

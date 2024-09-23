@@ -1,15 +1,18 @@
+import { ChevronRightIcon, StarIcon } from "@chakra-ui/icons"
+import { Box, Button, Container, Flex, Heading, Image, Spinner, Text, useColorModeValue } from "@chakra-ui/react"
+import Clink from "clink-react"
+import { useState } from "react"
+import { FaRegFilePdf } from "react-icons/fa6"
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5"
 import { useParams } from "react-router-dom"
 import useBook from "../hooks/useBook"
-import { Text, Box, Container, Heading, Image, useColorModeValue, Flex } from "@chakra-ui/react"
-import Clink from "clink-react"
-import { ChevronRightIcon, StarIcon } from "@chakra-ui/icons"
-import { useState } from "react"
 
 const BookDetailPage = () => {
     const [rating, setRating] = useState<number | null>(null);
     const [onHover, setOnHover] = useState<number | null>(null);
+    const [isClicked, setIsClicked] = useState(true);
     const { id } = useParams()
-    const { data } = useBook(id!)
+    const { data, isLoading } = useBook(id!)
     const bgColor = useColorModeValue('rgb(250, 250, 250)', 'rgb(26, 32, 44)');
     const textColor = useColorModeValue('rgba(0, 0, 0, 0.6)', 'rgba(255, 255, 255, 0.6)');
     const linkColor = useColorModeValue('#4169E1', '#90EE90');
@@ -35,6 +38,34 @@ const BookDetailPage = () => {
         )
     })
 
+    const linkToDownload = data?.accessInfo?.pdf?.downloadLink
+        && <Clink to={data?.accessInfo?.pdf?.downloadLink ?? ''} target='_blank' rel='noopener noreferrer'
+            _hover={{ textDecoration: 'none' }}
+        >
+            <Flex
+                alignItems={'center'}
+                gap={'5px'}
+                fontSize={{ base: '16px', md: '18px' }}
+                lineHeight={{ base: '24px', md: '28px' }}
+                fontWeight={'500'}
+                bg={bgColor}
+                p={'10px'}
+                borderRadius={'5px'}
+                mt={'16px'}
+                justifyContent={'center'}
+            >
+                <FaRegFilePdf
+                    color={linkColor}
+                />
+                <Text
+                    color={linkColor}
+                    textDecoration={'underline'}
+                >
+                    Download PDF
+                </Text>
+            </Flex>
+        </Clink>
+
     return (
         <>
             <Box
@@ -46,6 +77,7 @@ const BookDetailPage = () => {
                     paddingX={'15px'}
                     py={20}
                 >
+                    {isLoading && <Spinner />}
                     {data?.volumeInfo?.title &&
                         (<Text
                             mb={'30px'}
@@ -63,13 +95,43 @@ const BookDetailPage = () => {
                             ml={{ base: 0, md: '30px' }}
                             mb={{ base: '20px', md: '30px' }}
                         >
-                            <Image
-                                borderRadius={'5px'}
-                                src={data?.volumeInfo?.imageLinks?.thumbnail}
-                                w={'100%'}
-                            />
+                            <Flex
+                                gap={'10px'}
+                            >
+                                <Button
+                                    variant={'ghost'}
+                                    bg={bgColor}
+                                    p={'0'}
+                                    borderRadius={'5px'}
+                                    _hover={{ textDecoration: 'none' }}
+                                    onClick={() => setIsClicked(!isClicked)}
+                                >
+                                    {isClicked ?
+                                        <IoBookmarkOutline
+                                            color={textColor}
+                                            style={{
+                                                width: '35px',
+                                                height: '35px',
+                                            }}
+                                        />
+                                        : <IoBookmark
+                                            color={'red'}
+                                            style={{
+                                                width: '35px',
+                                                height: '35px',
+                                            }}
+                                        />
+                                    }
+                                </Button>
+                                <Image
+                                    order={{ base: -1, md: 1 }}
+                                    borderRadius={'5px'}
+                                    src={data?.volumeInfo?.imageLinks?.thumbnail}
+                                    w={'100%'}
+                                />
+                            </Flex>
+                            {linkToDownload}
                         </Box>
-
                         <Heading
                             as={'h1'}
                             fontSize={{ base: '24px', md: '32px' }}

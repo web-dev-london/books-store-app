@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
+import { Box, Container, Heading, Text } from '@chakra-ui/react'
 import { isRouteErrorResponse, useRouteError } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 
@@ -7,12 +7,17 @@ const ErrorPage = () => {
     return (
         <>
             <NavBar />
-            <Box
-                py={20}
+            <Container
+                maxW={'1105px'}
+                paddingX={'15px'}
             >
-                <Heading> 🤷‍♂️ Oops...</Heading>
-                <Text>{isRouteErrorResponse(error) ? 'This page does not exist' : 'An unexpected error has occurred'}</Text>
-            </Box>
+                <Box
+                    py={20}
+                >
+                    <Heading> 🤷‍♂️ Oops...</Heading>
+                    <Text>{isRouteErrorResponse(error) ? 'This page does not exist' : 'An unexpected error has occurred'}</Text>
+                </Box>
+            </Container>
         </>
     )
 }

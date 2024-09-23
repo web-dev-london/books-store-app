@@ -5,6 +5,8 @@ import noImage from '../assets/no-image-placeholder.webp'
 import { StarIcon } from "@chakra-ui/icons"
 import { FaStarHalfAlt } from "react-icons/fa";
 import Clink from "clink-react"
+import { FaRegFilePdf } from "react-icons/fa6";
+
 
 
 interface Props {
@@ -71,7 +73,7 @@ const CardsView = ({ book }: Props) => {
                         fontWeight={'400'}
                         lineHeight={'18px'}
                     >
-                        Language: {book.volumeInfo.language}
+                        Language: ({book.volumeInfo.language})
                     </Text>
                     {book.volumeInfo.publishedDate &&
                         (<Text
@@ -96,8 +98,12 @@ const CardsView = ({ book }: Props) => {
                     >
                         {book.volumeInfo.authors}
                     </Text>
-
-
+                    {
+                        book?.accessInfo?.pdf?.downloadLink &&
+                        (<Text>
+                            <FaRegFilePdf size={'20px'} color="#4169E1" />
+                        </Text>)
+                    }
                     <Flex
                         alignItems={'center'}
                         gap={'5px'}
