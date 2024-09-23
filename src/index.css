@@ -7,9 +7,9 @@
 }
 
 .search-bar-inputGroup.active {
-    width: 250px;
+    width: 245px;
     position: absolute;
-    right: 0px;
+    right: -10px;
 }
 
 .search-bar-input.active {

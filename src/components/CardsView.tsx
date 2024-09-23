@@ -4,6 +4,7 @@ import { Book } from "../validation/validate"
 import noImage from '../assets/no-image-placeholder.webp'
 import { StarIcon } from "@chakra-ui/icons"
 import { FaStarHalfAlt } from "react-icons/fa";
+import Clink from "clink-react"
 
 
 interface Props {
@@ -57,14 +58,16 @@ const CardsView = ({ book }: Props) => {
                     gap={'2px'}
                 >
                     <Text
-                        fontSize={'14px'}
+                        fontSize={{ base: '16px', md: '18px' }}
                         fontWeight={'600'}
                         lineHeight={'21px'}
                     >
-                        {book.volumeInfo.title}
+                        <Clink to={`/book/${book.id}`}>
+                            {book.volumeInfo.title}
+                        </Clink>
                     </Text>
                     <Text
-                        fontSize={'13px'}
+                        fontSize={{ base: '13px', md: '15px' }}
                         fontWeight={'400'}
                         lineHeight={'18px'}
                     >
@@ -72,22 +75,21 @@ const CardsView = ({ book }: Props) => {
                     </Text>
                     {book.volumeInfo.publishedDate &&
                         (<Text
-                            fontSize={'13px'}
+                            fontSize={{ base: '13px', md: '15px' }}
                             fontWeight={'400'}
                             lineHeight={'18px'}
-                        // color={'rgba(0, 0, 0, 0.6)'}
                         >
-                            Published:   {book.volumeInfo.publishedDate}
+                            {book.volumeInfo.publishedDate}
                         </Text>)}
                     <Text
-                        fontSize={'13px'}
+                        fontSize={{ base: '13px', md: '15px' }}
                         fontWeight={'400'}
                         lineHeight={'18px'}
                     >
                         By: {book.volumeInfo.publisher}
                     </Text>
                     <Text
-                        fontSize={'15px'}
+                        fontSize={{ base: '13px', md: '15px' }}
                         fontWeight={'400'}
                         lineHeight={'18px'}
                         mt={'5px'}

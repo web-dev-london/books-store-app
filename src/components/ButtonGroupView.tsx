@@ -1,5 +1,8 @@
 import { CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import { ButtonGroup, IconButton, Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import useBookQueryStore from '../store';
 
 interface Props {
     isOpen: boolean;
@@ -7,6 +10,12 @@ interface Props {
 }
 
 const ButtonGroupView = ({ isOpen, setIsOpen }: Props) => {
+    const [placeholder, setPlaceholder] = useState('Search...');
+    const ref = React.useRef<HTMLInputElement>(null);
+    const { setSearchText } = useBookQueryStore();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
     return (
         <>
             <ButtonGroup
@@ -21,18 +30,48 @@ const ButtonGroupView = ({ isOpen, setIsOpen }: Props) => {
                         display={{ base: 'block', md: 'none' }}
                         className={isOpen ? 'search-bar-inputGroup active' : 'search-bar-inputGroup transition-all-ease-in-out'}
                     >
-                        <InputLeftElement pointerEvents='none'>
-                            <SearchIcon color='gray.300' />
-                        </InputLeftElement>
-                        <Input
-                            _focusVisible={{ boxShadow: 'none' }}
-                            variant={'outline'}
-                            type='text'
-                            placeholder='Find a book...'
-                            borderRadius={'200px'}
-                            as={'input'}
-                            className={isOpen ? 'search-bar-input active' : 'search-bar-input'}
-                        />
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+
+                                if (ref.current) {
+                                    const searchTerm = ref.current.value;
+
+                                    if (searchTerm) {
+                                        setSearchText(searchTerm);
+                                        const params = new URLSearchParams(searchParams.toString());
+                                        params.set('search', searchTerm);
+                                        navigate(`/?${params.toString()}`);
+                                    } else {
+                                        navigate('/');
+                                    }
+                                }
+                            }}
+                        >
+                            <InputLeftElement pointerEvents='none'>
+                                <SearchIcon color='gray.300' mr={2} />
+                            </InputLeftElement>
+                            <Input
+                                pl={'30px'}
+                                ref={ref}
+                                _placeholder={{
+                                    color: 'black',
+                                    fontSize: '15px',
+                                    opacity: '0.4',
+                                    letterSpacing: '.5px',
+                                }}
+                                placeholder={placeholder}
+                                _focusVisible={{ boxShadow: 'none' }}
+                                variant={'outline'}
+                                type='text'
+                                onFocus={() => setPlaceholder('')}
+                                onBlur={() => setPlaceholder('Search...')}
+                                transition={'.4s ease'}
+                                borderRadius={'200px'}
+                                as={'input'}
+                                className={isOpen ? 'search-bar-input active' : 'search-bar-input'}
+                            />
+                        </form>
                     </InputGroup>
                 )}
 
@@ -61,8 +100,9 @@ const ButtonGroupView = ({ isOpen, setIsOpen }: Props) => {
                             position={'absolute'}
                             right={'50%'}
                             top={'50%'}
-                            transform={'translate(50%, -50%)'}
+                            transform={'translate(100%, -50%)'}
                             w={3} h={3}
+                            color={'black'}
                         />
                     }
                     onClick={() => setIsOpen(!isOpen)} />
