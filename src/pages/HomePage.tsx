@@ -1,16 +1,16 @@
-import Footer from '../components/Footer';
-import HeroView from '../components/HeroView';
-import MainView from '../components/MainView';
+import Footer from '../components/footer/Footer';
+import HeroView from '../components/heroview/HeroView';
+import MainView from '../components/mainview/MainView';
 
 
 const HomePage = () => {
-    return (
-        <>
-            <HeroView />
-            <MainView />
-            <Footer />
-        </>
-    )
+  return (
+    <>
+      <HeroView />
+      <MainView />
+      <Footer />
+    </>
+  )
 }
 
 export default HomePage

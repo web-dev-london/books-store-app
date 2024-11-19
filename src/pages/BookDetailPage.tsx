@@ -1,11 +1,11 @@
 import { Box, Container, Spinner, useColorModeValue } from "@chakra-ui/react"
 import { useParams } from "react-router-dom"
-import BookChevronIcon from "../components/BookChevronIcon"
-import BookDescription from "../components/BookDescription"
-import BookDetailsView from "../components/BookDetailsView"
-import BookRightColumn from "../components/BookRightColumn"
-import HeadingView from "../components/HeadingView"
-import LinkToDownload from "../components/LinkToDownload"
+import BookChevronIcon from "../components/bookdetailspage/BookChevronIcon"
+import BookDescription from "../components/bookdetailspage/BookDescription"
+import BookDetailsView from "../components/bookdetailspage/BookDetailsView"
+import BookRightColumn from "../components/bookdetailspage/BookRightColumn"
+import HeadingView from "../components/bookdetailspage/HeadingView"
+import LinkToDownload from "../components/bookdetailspage/LinkToDownload"
 import useBook from "../hooks/useBook"
 
 

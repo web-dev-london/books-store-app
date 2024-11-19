@@ -1,5 +1,5 @@
 import { Text, useColorModeValue } from "@chakra-ui/react"
-import { BookDetail } from '../validation/validate'
+import { BookDetail } from '../../validation/validate'
 
 
 type Props = {

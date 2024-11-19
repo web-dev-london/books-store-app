@@ -1,7 +1,7 @@
 import { Flex, Text, useColorModeValue } from "@chakra-ui/react"
-import { BookDetail } from "../validation/validate"
+import { BookDetail } from "../../validation/validate"
 import Clink from "clink-react"
-import Stars from "../utils/Stars"
+import Stars from "../../utils/Stars"
 
 type Props = {
   data?: BookDetail;

@@ -1,10 +1,10 @@
 import { Container, Flex, HStack, useColorModeValue } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import ButtonTrialView from './ButtonTrialView';
+import ButtonTrialView from '../ButtonTrialView';
 import Logo from './Logo';
 import MenuView from './MenuView';
 import NavList from './NavList';
-import ButtonGroupView from './ButtonGroupView';
+import ButtonGroupView from '../ButtonGroupView';
 
 
 

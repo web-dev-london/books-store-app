@@ -1,7 +1,7 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import BookmarkView from "../components/BookmarkView";
-import { BookDetail } from "../validation/validate";
+import BookmarkView from "./BookmarkView";
+import { BookDetail } from "../../validation/validate";
 
 
 type Props = {

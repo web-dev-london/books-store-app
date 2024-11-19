@@ -1,7 +1,7 @@
 import { Flex, Text, useColorModeValue } from "@chakra-ui/react"
 import Clink from "clink-react"
 import { FaRegFilePdf } from "react-icons/fa6"
-import { BookDetail } from '../validation/validate'
+import { BookDetail } from '../../validation/validate'
 
 
 type Props = {
