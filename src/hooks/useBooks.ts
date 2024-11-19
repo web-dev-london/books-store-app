@@ -8,32 +8,25 @@ import ms from 'ms'
 const apiClient = new ApiClient(`/books/v1/volumes`, bookSchema);
 
 const useBooks = () => {
-    const { bookQuery } = useBookQueryStore();
+  const { bookQuery } = useBookQueryStore();
 
-    const startIndex = (bookQuery.page - 1) * bookQuery.limit;
+  const startIndex = (bookQuery.page - 1) * bookQuery.limit;
 
-    console.log('API Request Params: ', {
-        q: bookQuery.search,
-        filter: bookQuery.filter,
-        startIndex,
-        maxResults: bookQuery.limit ?? 8,
-        orderBy: bookQuery.orderBy,
-    });
-    return useQuery<FetchResponse<Book>>({
-        queryKey: ['books', bookQuery],
-        queryFn: () => {
-            return apiClient.getAll({
-                params: {
-                    q: bookQuery.search,
-                    filter: bookQuery.filter,
-                    startIndex,
-                    maxResults: bookQuery.limit,
-                    orderBy: bookQuery.orderBy,
-                }
-            })
-        },
-        staleTime: ms('24h'),// 24 hours
-    })
+  return useQuery<FetchResponse<Book>>({
+    queryKey: ['books', bookQuery],
+    queryFn: () => {
+      return apiClient.getAll({
+        params: {
+          q: bookQuery.search,
+          filter: bookQuery.filter,
+          startIndex,
+          maxResults: bookQuery.limit,
+          orderBy: bookQuery.orderBy,
+        }
+      })
+    },
+    staleTime: ms('24h'),// 24 hours
+  })
 }
 
 export default useBooks;

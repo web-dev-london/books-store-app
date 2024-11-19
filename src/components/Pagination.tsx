@@ -14,8 +14,6 @@ const Pagination = () => {
 
   if (!data) return null;
 
-  console.log('Total Items: ', data.totalItems);
-
   const totalPages = Math.ceil((data.totalItems) / limit);
   const currentPage = page;
 
