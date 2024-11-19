@@ -45,9 +45,6 @@ class ApiClient<T> {
 
 export default ApiClient;
 
-/* 
-    API Key: Google books
-    AIzaSyDSo8ewzkQCnp4MiHC7fsJfGyGDBLcASEU
- */
+
 
 
