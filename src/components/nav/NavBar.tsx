@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import ButtonTrialView from '../ButtonTrialView';
 import Logo from './Logo';
 import MenuView from './MenuView';
-import NavList from './NavList';
+// import NavList from './NavList';
 import ButtonGroupView from '../ButtonGroupView';
 
 
@@ -47,7 +47,7 @@ const NavBar = () => {
             height={'65.99px'}
           >
             <Logo isOpen={isOpen} />
-            <NavList />
+            {/* <NavList /> */}
             <Flex ml={'auto'}>
               <ButtonTrialView />
               <ButtonGroupView isOpen={isOpen} setIsOpen={setIsOpen} />
